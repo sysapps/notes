@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Security Requirements for System Applications</title>
+    <title>System Applications: Security Requirements and Threat Model</title>
     <meta http-equiv='Content-Type' content='text/html;charset=utf-8'/>
     <!-- 
       === NOTA BENE ===
@@ -58,9 +58,9 @@
   </head>
   <body>
     <section id='abstract'>
-      This document defines the security requirements for <em>system 
-      applications</em>, a class of web application which has access to APIs 
-      not made available by a normal web browser.
+      This document defines the security requirements and threat model for 
+      <em>system applications</em>, a class of web application which has 
+      access to APIs not made available by a normal web browser.
     </section>
     
     <section>
@@ -80,9 +80,9 @@
       <section>
       <h3>Purpose</h3>
       <p>
-        This document has been developed as part of a standardisation process
-        in order to enable web applications to be functional equals to native
-        applications.
+        This document has been developed as part of a standardization process
+        in order to enable web applications to become more functional and to potentially
+        make them functional equals to native applications.
       </p>
       
       <p>  
@@ -100,7 +100,7 @@
         suggests some technical measures for enforcing them.
       </p>
       <p>
-        The reason for <em>standardising</em> a security model is to enable
+        The reason for <em>standardizing</em> a security model is to enable
         potential interoperability of system applications and to produce a set
         of 'best practice' guidelines for implementors of system application
         platforms.  This document may be used by application developers to 
@@ -130,7 +130,7 @@
         <li>Side channel attacks on system applications.</li>
         <li>Platform vulnerabilities.</li>
         <li>Implementation details of secure storage or disk encryption 
-            provided by a conformant system application platform.</li>
+            provided by a conforming system application platform.</li>
         <li>Fingerprinting of users through system applications.</li>
         <li>Invasive government monitoring of citizens through system 
             applications.</li>
@@ -160,7 +160,7 @@
         and stakeholders.  
       </p>
       <ul>
-        <li><em>User</em>.  The person who uses a device running a conformant 
+        <li><em>User</em>.  The person who uses a device running a conforming 
             platform.  This specification does not define whether this user is 
             the owner of the platform.</li>
         <li><em>Application author / developer</em>.  The person or team who 
@@ -194,7 +194,7 @@
       <p>The following terms are used throughout this document.</p>
       <ul>
         <li><em>Device owners</em>. One or more stakeholders who has a level of ownership in the device.  This may include the user, operator and device manufacturer.  The owners are defined in a strict hierarchy such that a more privileged owner may override a less privileged owner.</li>
-        <li><em>Device</em>.  The device running a conformant system application execution environment.  A user may have several devices.</li>
+        <li><em>Device</em>.  The device running a conforming system application execution environment.  A user may have several devices.</li>
         <li><em>Execution environment</em>.  The system application platform, also described in this document as a <em>runtime</em>, responsible for controlling and supporting the system application and providing it with access to APIs.</li>
         <li><em>Network</em>.  The network connection(s) used by system applications.</li>
         <li><em>Application</em>.  For the rest of this document, the word 'application' refers to a system application.</li>
@@ -204,7 +204,7 @@
         <li><em>App Store</em>.  An entity who may be the source of applications and provide additional signing or assurance.</li>      
         <li><em>Side-loading</em>.  The installation of an application through a channel out side of a distributor or app store.  Most commonly through downloading an application package and installing it from disk.</li>
         <li><em>Malware</em>.  Malicious software, in this context a malicious system application with a primary aim which violates the end user's security or privacy requirements.</li>
-        <li><em>Greyware</em>.  Software with a primary purpose that is aligned to the users expectations but is also bundled with some form of functionality (advertising, monitoring, etc) that violates the user's privacy requirements.</li>       
+        <li><em>Grayware</em>.  Software with a primary purpose that is aligned to the users expectations but is also bundled with some form of functionality (advertising, monitoring, etc) that violates the user's privacy requirements.</li>       
         <li><em>Policy</em>.  A set of rules governing system applications or the system application environment.  This does not have to correspond to a particular language and may be implemented in any way (policy file, credentials, etc) so long as it allows for interoperability.</li> 
       </ul>
     </section>
@@ -297,7 +297,7 @@
         <td>Medium - this has occurred many times in the past</td>
       </tr>
       <tr>
-        <td>Injection of code into trusted application through unauthenticated/compromised
+        <td>Injection of code into trusted application through an unauthenticated or compromised
           remote endpoint</td>
         <td>An application downloads executable code from a remote server which is
           modified by a malicious party either by compromising the server or the
@@ -329,7 +329,7 @@
       </tr>
       <tr>
         <td>User installed malware</td>
-        <td>A user accidentally installs malware not realising the implications of
+        <td>A user accidentally installs malware not realizing the implications of
           doing so. This malware is able to misuse device capabilities in various
           ways (see below)</td>
         <td>High</td>
@@ -346,7 +346,7 @@
       <tr>
         <td>Malware installed through app store compromise</td>
         <td>A trusted, legitimate source of applications (such as an app store) is
-          remotely compromised in order to authorise and install malware on end user
+          remotely compromised in order to authorize and install malware on end user
           devices</td>
         <td>Very High - this could compromise all users of an app store</td>
         <td>Low</td>  
@@ -393,7 +393,7 @@
         <td>Low (mobile) - botnets on mobile are almost unheard of (though they are beginning to be reported).  High (PC) - a well acknowledged problem.</td>
       </tr>
       <tr>
-        <td>Malware: changing settings for novelty/amusement</td>
+        <td>Malware: changing settings for novelty / amusement</td>
         <td>Malware is installed and annoys the user to the amusement of an attacker.
           No real harm is done.</td>
         <td>Low - easily revertible</td>
@@ -417,7 +417,7 @@
       <tr>
         <td>Malware: in-app billing</td>
         <td>Malware exploits the in-app billing capabilities of the device to charge
-          the user money without authorisation.</td>
+          the user money without authorization.</td>
         <td>High/medium - potential loss of (relatively small amounts of) money</td>
         <td>Medium - few known attacks, but it seems likely</td>
       </tr>
@@ -478,7 +478,7 @@
     <ul>
       <li>System applications must, by default, be isolated from the rest of the system and other applications.</li>
       <li>System applications must communicate securely with authenticated endpoints to avoid content injection.  This implies that system applications must themselves be identifiable, and that the system application runtime must be able to authenticate all remote and local endpoints.</li> 
-      <li>System applications must implement a least-privilege access control to limit the impact of malware and should be sufficiently configurable to allow greyware to be constrained if a user wishes to do so.</li>
+      <li>System applications must implement a least-privilege access control to limit the impact of malware and should be sufficiently configurable to allow grayware to be constrained if a user wishes to do so.</li>
       <li>Least privilege access control must include access to remote sources, particularly for loading scripts and other content.</li>
       <li>System applications and their activities must be visible and/or auditable to end users to mitigate risks of spyware</li>
       <li>Applications from unauthenticated sources should be constrained by default as the impact of malware is potentially high.</li>
@@ -492,7 +492,7 @@
       <p>
         A system application SHALL consist of a downloadable archive containing
         a manifest file and signatures.  It MAY contain application content.  One
-        example of a conformant application package is a Widget [[WIDGETS]].
+        example of a conforming application package is a Widget [[WIDGETS]].
       </p>
     </section>
 
@@ -523,15 +523,15 @@
       <p>
         The execution environment SHALL reject invalid application signatures.  
         It SHALL by default disable applications with no signature or with 
-        signatures from entities with unrecoginsed root certificates.  However, 
+        signatures from entities with unrecognized root certificates.  However, 
         the execution environment MAY allow signatures from entities with an 
-        unrecognised root certificate if a device owner explicitly permits 
+        unrecognized root certificate if a device owner explicitly permits 
         this.  The execution environment MAY 
         define a policy regarding whether an application is permitted to be 
         installed depending on the signatures accompanying the application.
       </p>
       <p>
-        The execution environment SHALL provide an interoperable mechanism allowing device 
+        The execution environment SHALL provide an inter-operable mechanism allowing device 
         owners to add and remove certificate authority root
         certificates.  This mechanism MAY be restricted to only certain 
         device owners based on a policy set by a more privileged device owner.
@@ -565,7 +565,7 @@
         user where appropriate to avoid loss of data.
       </p>    
       <div class="note">
-        E.g., a contact manager application, when uninstalled, shouldn't 
+        E.g., a contact manager application, when uninstalled, should not 
         necessarily delete all the user's contacts.
       </div>
       </section>      
@@ -582,7 +582,7 @@
       <p>
         Application packages SHALL contain a list of the permissions that it 
         requires in order to function in the manner the developer intends. A 
-        conformant execution environment SHALL follow the principle of least 
+        conforming execution environment SHALL follow the principle of least 
         privilege and provide a system application with <em>no more</em> than 
         the requested set of permissions.
       </p>
@@ -603,7 +603,7 @@
         This document does not define the language or structure of how 
         permissions should be stored or processed by a execution environment.  
         However, the requirement to store and load permissions in an 
-        interoperable way allows for use cases such as synchronising user 
+        interoperable way allows for use cases such as synchronizing user 
         preferences between devices and allows system applications to be 
         managed by an operating system which may also control native 
         applications.  In the editor's view, the full security model 
@@ -678,11 +678,11 @@
       <section>
       <h3>Restrictions on JavaScript</h3>
       <p>
-        System applications SHALL NOT be allowed to execute inline javascript
+        System applications SHALL NOT be allowed to execute inline JavaScript
         nor shall they be able to execute the string-to-JavaScript methods such as
         <code>eval</code> and <code>Function</code> nor shall they be able to use
         <code>setTimeout</code> or <code>setInterval</code> functions with a 
-        non-callable first argument.  System applications SHALL follow javascript 
+        non-callable first argument.  System applications SHALL follow JavaScript 
         restrictions described in the [[CSP]] specification when the unsafe-eval 
         directive is not enabled.
       </p>   
@@ -695,7 +695,7 @@
         non-whitelisted locations.  This includes images, CSS style sheets, 
         scripts, frames, fonts and other media. The definition of this content
         can be found in [[CSP]].
-      </p>           
+      </p> 
       <p>
         System applications SHALL be able to specify in their manifest the set 
         of remote locations for these resources.
