@@ -66,17 +66,22 @@
     <section>
       <h2>Introduction</h2>
       <p>
-        This document defines the security requirements for system applications. 
-        System applications are web applications which require stronger interaction with
+        This document defines the security requirements and threats for system applications. 
+        System applications are web applications that require stronger interaction with
         the host platform compared to web pages and are most closely
         comparable to native applications [[SYSAPPS-CHARTER]].  System applications enjoy
         extra privileges and are able to access APIs which are not available to web
-        applications running in the browser.  They are therefore not bound by the
+        applications running in a normal browser sandbox.  They are therefore not bound by the
         existing browser security model (See [[Zalewski2011]] for details on 
-        the current browser security model).  This document defines a set of
-        security requirements which cover application packaging, authenticity, installation,
-        provenance, access control, runtime restrictions and monitoring interfaces.
+        the current browser security model).  This document outlines the threats facing 
+        system applications in this context and then defines a set of security requirements 
+        which, when satisfied, will mitigate the threats.  This document will then outline
+        potential implementation options for the mitigations and how these may or may not 
+        adequately address the threats.
       </p>
+      <div class="note">
+        So far, this document doesn't actually describe mitigations.  It should.
+      </div>
       <section>
       <h3>Purpose</h3>
       <p>
@@ -105,7 +110,12 @@
         of 'best practice' guidelines for implementors of system application
         platforms.  This document may be used by application developers to 
         understand the constraints placed on system applications and the reason
-        for certain design choices.
+        for certain design choices.  
+      </p>
+      <p>
+        Furthermore, any implementers of the <a href="http://runtime.sysapps.org/">Runtime 
+        and Security Model</a> for system applications may wish to understand the rationale for
+        the mechanisms described there, and adapt them for a different context.
       </p>
       </section>
       <section>      
@@ -138,21 +148,8 @@
             system application renderer process.</li>
         <li>The runtime security of web pages as processed by a web browser.</li>
       </ul>
-      <p>
-        Primarily, this document will define:     
-      </p>
-      <ul>
-        <li>Requirements on how system applications should be packaged and 
-            signed.</li>
-        <li>System application lifecycle events including installation, update 
-            and uninstallation.</li>
-        <li>Access control requirements for system applications using APIs or 
-            resources.</li>
-        <li>Constraints placed on system application execution at runtime.</li>
-        <li>Requirements on system applications so that they can potentially be 
-            monitored and interoperate with the rest of the device.</li>
-      </ul>      
       </section>
+
       <section>            
       <h3>System Assets and Stakeholders</h3>
       <p>
@@ -164,7 +161,7 @@
             platform.  This specification does not define whether this user is 
             the owner of the platform.</li>
         <li><em>Application author / developer</em>.  The person or team who 
-            created a system application</li>
+            created a system application.</li>
         <li><em>Device manufacturer</em>.</li>
         <li><em>Network operator</em>.  In some contexts, particularly mobile 
             devices, an operator will exist who provides network access.</li>        
@@ -175,20 +172,7 @@
       <img src="./security-model-concept-map.png" />
       </section>      
     </section>
-<!--    
-    <section id="conformance">
-      <p>
-        This document is primarily <em>informative</em> in that it does not 
-        define detailed standards to which a product must comply for 
-        interoperability.
-      </p>
-      </p>
-        There is one class of product that this document is aimed at: 
-        an <dfn>execution environment</dfn> for system applications.
-      </p>
-    </section>
--->
-    
+
     <section>
       <h2>Terminology</h2>
       <p>The following terms are used throughout this document.</p>
@@ -263,8 +247,11 @@
         not intended to be exhaustive: the specific context in which a system
         application is run and the device in question may have additional
         considerations.  This list is drawn from related academic literature
-        and systems (TODO: Reference).
+        and systems.
       </p>
+      <div class="note">
+        TODO: provide references for this section.
+      </div>
       <p>
         The threat from Malware is repeated several times in this list in order
         to define the various motivations and potential harm caused by a 
@@ -467,8 +454,6 @@
         <td>Medium: loss of user data (contacts / media / etc) in one application</td>
         <td>Medium/low</td>
       </tr>
-
-      
     </table>
     <section>      
     <h3>Conclusions</h3>
@@ -486,307 +471,6 @@
     </ul>
     </section>      
     </section>
-    
-    <section>
-      <h2>Application Packaging and Signing</h2>
-      <p>
-        A system application SHALL consist of a downloadable archive containing
-        a manifest file and signatures.  It MAY contain application content.  One
-        example of a conforming application package is a Widget [[WIDGETS]].
-      </p>
-    </section>
-
-    <section>
-      <h2>Application Installation, Provenance and Update</h2>
-      <section>      
-      <h3>Installation</h3>
-      <p>
-        System applications MUST be installed before they can be executed.
-      </p>
-      <p>  
-        System applications MAY be installed by any device owner.  System 
-        applications MAY be installed by the operating system of a device when
-        it is first installed.
-      </p>
-      <p>  
-        System application MAY be installed by the user of the device.  The 
-        installation of a system application by a user MUST involve user 
-        interaction and MUST be the result of an action triggered by the user's
-        explicit intent to install the application.
-      </p>  
-      <p>
-        The party responsible for installing an application MUST be recorded by
-        the execution environment.  The distributor of an application (and 
-        whether the application was side-loaded) MUST be recorded by the 
-        execution environment.
-      </p>
-      <p>
-        The execution environment SHALL reject invalid application signatures.  
-        It SHALL by default disable applications with no signature or with 
-        signatures from entities with unrecognized root certificates.  However, 
-        the execution environment MAY allow signatures from entities with an 
-        unrecognized root certificate if a device owner explicitly permits 
-        this.  The execution environment MAY 
-        define a policy regarding whether an application is permitted to be 
-        installed depending on the signatures accompanying the application.
-      </p>
-      <p>
-        The execution environment SHALL provide an inter-operable mechanism allowing device 
-        owners to add and remove certificate authority root
-        certificates.  This mechanism MAY be restricted to only certain 
-        device owners based on a policy set by a more privileged device owner.
-      </p>
-      </section>      
-      <h3>Update</h3>      
-      <p>
-        System applications SHALL have a well-defined update process that SHALL
-        allow for the application to be upgraded when the distributor 
-        indicates that a newer version of the application is available.  System
-        applications SHALL contain a version number.
-      </p>
-      <p>
-        System applications SHALL be updated automatically.  This feature MAY 
-        be disabled by a device owner.
-      </p>
-      </section>
-      <section>            
-      <h3>Uninstallation</h3>
-      <p>
-        The execution environment SHALL allow all system applications to be  
-        uninstalled.  However, an execution environment MAY prevent device 
-        owners from uninstalling applications that were installed by a more 
-        privileged device owner.
-      </p>
-      <p>
-        An uninstalled system application SHALL NOT be executed by the user
-        agent.  User data SHALL be deleted by a system application when it is 
-        uninstalled only when that system application has indicated that this 
-        is appropriate.  Applications are encouraged to gain consent from the 
-        user where appropriate to avoid loss of data.
-      </p>    
-      <div class="note">
-        E.g., a contact manager application, when uninstalled, should not 
-        necessarily delete all the user's contacts.
-      </div>
-      </section>      
-    </section>
-    
-    <section>
-      <h2>API Access Control</h2>
-      <p>
-        System applications SHALL access platform capabilities through a set of
-        APIs as defined by the System Applications Working Group [[SYSAPPS-CHARTER]].  
-        The use of an API by an application SHALL require the application to
-        have the corresponding permission, granted by the execution environment.
-      </p>
-      <p>
-        Application packages SHALL contain a list of the permissions that it 
-        requires in order to function in the manner the developer intends. A 
-        conforming execution environment SHALL follow the principle of least 
-        privilege and provide a system application with <em>no more</em> than 
-        the requested set of permissions.
-      </p>
-      <p>
-        The execution environment MAY install an application without granting it
-        the full set of permissions requested in the manifest.
-      </p>
-      <p>
-        the execution environment SHALL store the permissions granted to an 
-        application in an interoperable format and reload these permissions
-        when an application instance is started.  Other privileged system 
-        components or system applications MAY be granted permission to modify 
-        these permissions but this permission SHALL NOT be given to system
-        applications by default.
-      </p>
-      
-      <div class="note">
-        This document does not define the language or structure of how 
-        permissions should be stored or processed by a execution environment.  
-        However, the requirement to store and load permissions in an 
-        interoperable way allows for use cases such as synchronizing user 
-        preferences between devices and allows system applications to be 
-        managed by an operating system which may also control native 
-        applications.  In the editor's view, the full security model 
-        specification should go further and define the structure of permissions 
-        (or at least the meta-model).
-      </div>
-    
-    </section>
-    
-    
-    
-    <section>
-      <h2>Application Communication and Isolation</h2>
-      <p>
-        System applications operate in an isolated context with a unique origin 
-        defined by their execution environment.  Unless requested by both applications, 
-        a system application SHALL NOT be able to communicate with or access 
-        the runtime content of another system application instance from a 
-        different application package.  System application instances from
-        the same package SHALL have the same origin and SHALL be able to 
-        communicate with each other.
-      </p>
-      <p>
-        The origin of a system application instance SHALL be distinct from any 
-        other application from a different application package. An example
-        can be found in [[WIDGETS-URI]] and is repeated here:
-      </p>
-      <p><code>widget://c13c6f30-ce25-11e0-9572-0800200c9a66</code></p>
-      <div class="note">
-        It seems necessary to define the 'origin' of a system application as
-        the execution environment may be a browser operating in a different mode, e.g., a
-        chrome browser running packaged applications.  However, there are no
-        use cases for normal web applications interacting with system 
-        applications so this does not seem to be an important part of the 
-        document.  It is likely that system applications (particularly
-        from the same author) will want to communicate with one another, though.
-      </div>
-      <section>           
-      <h3>Communication access control and permissions</h3>
-      <p>
-        System applications SHALL define the applications they wish to 
-        communicate with through the manifest.  This definition MAY include
-        wildcards or other patterns for matching with particular application 
-        developers or distributors.
-      </p>
-      </section>      
-      <section>
-      <h3>Communication between system applications</h3>
-      <p>
-        System applications SHALL communicate with other system applications on 
-        the same host through <em>channel messaging</em> [[POSTMSG]].
-      </p>
-      </section>      
-    </section>
-    
-    <section>
-      <h2>Runtime Environment</h2>
-      <p>
-        Because system applications are given access to more potentially 
-        dangerous APIs and capabilities, the definition of a set of constraints
-        on such applications is an opportunity to remove a whole class of 
-        potential vulnerabilities.  This section defines how system applications
-        are constrained beyond normal web applications.
-      </p>
-      
-      <div class="note">
-        It is recommended that CSP [[CSP]] be used to implement many of the 
-        restrictions outlined in this document.  However, other 
-        implementations such as WARP [[WARP]] may also be used.
-      </div>
-      
-      <section>
-      <h3>Restrictions on JavaScript</h3>
-      <p>
-        System applications SHALL NOT be allowed to execute inline JavaScript
-        nor shall they be able to execute the string-to-JavaScript methods such as
-        <code>eval</code> and <code>Function</code> nor shall they be able to use
-        <code>setTimeout</code> or <code>setInterval</code> functions with a 
-        non-callable first argument.  System applications SHALL follow JavaScript 
-        restrictions described in the [[CSP]] specification when the unsafe-eval 
-        directive is not enabled.
-      </p>   
-      </section>      
-      <section>
-      <h3>Restrictions on Including Web Resources</h3>
-      <p>
-        To maintain the integrity of a system application, the execution environment 
-        SHALL NOT allow an application to load external content from 
-        non-whitelisted locations.  This includes images, CSS style sheets, 
-        scripts, frames, fonts and other media. The definition of this content
-        can be found in [[CSP]].
-      </p> 
-      <p>
-        System applications SHALL be able to specify in their manifest the set 
-        of remote locations for these resources.
-      </p>
-      <p>
-        With the exception of images and other media content, all remote 
-        locations defined in the manifest MUST have the protocol 
-        <code>https:</code> or <code>wss:</code>.  Any remote locations defined in the manifest for
-        non image or media sources which does not use the <code>https</code> or <code>wss:</code>
-        protocol MUST be disregarded and not whitelisted.
-      </p>
-      <div class="note">
-        It is suggested, therefore, that the manifest contain a section defining
-        the CSP policy for the application in this regard, although not CSP 
-        statements which would violate the rest of this document. 
-      </div>        
-      </section>      
-      <section>
-      <h3>Restrictions on Communicating with External Sources </h3>
-      <p>
-        System applications SHALL only be able to communicate using 
-        XmlHttpRequests [[XHR]], WebSockets and EventSources only with URIs 
-        explicitly defined in the manifest of the application and only if the 
-        protocol of these URIs is <code>https:</code> or <code>wss:</code>.
-      </p>
-      </section>      
-      <section>
-      <h3>Cookies</h3>
-      <p>
-        System applications SHALL have an individual, isolated cookie store.  
-        Two instances of applications from the same package SHALL share the 
-        same store, but two instances of system applications from different
-        packages SHALL NOT be able to access each other's cookies.
-      </p>
-      </section>      
-      <section>
-      <h3>File API</h3>
-      <p>
-        System applications MAY be granted permission to access system files 
-        through the File API [[FILE-API]].  
-      </p>
-      <p>  
-        System applications SHALL be granted permission to read, write and 
-        append to files stored in an isolated area unique to that application.  
-        This storage SHALL NOT be shared with applications from different 
-        application packages.  Execution environments SHALL provide encryption for this
-        storage area in order to mitigate the threat to application data 
-        when a device is stolen.  This capability MAY be turned off by a user.
-      </p>
-      <div class="note">
-        Encrypted storage may take the form of full-disk encryption.
-      </div>
-      </section>      
-      <section>
-      <h3>Disabled and modified features</h3>
-      <p>
-        System applications do not have access to the following features 
-        provided by browsers.
-      </p>
-      <ul>
-        <li>Navigation history - window.history and window.location.</li>
-        <li>Hyperlinks - hyperlinks to external websites should be opened 
-        in a web browser rather than in the context of the system application.</li>
-        <li>Third-party browser plugins. Man-in-the-browser threats could cause 
-        code injection resulting in a security violation.  As such, third-party 
-        browser plugins should be disabled in a systems applications context.</li>
-        <li>Browser "chrome" APIs  (window.locationbar, window.menubar, 
-        window.external, window,sidebar, etc.).</li>
-      </ul>
-      </section>
-    </section>
-    
-    <section>
-      <h2>Monitoring and Interacting with Applications</h2>
-      <p>
-        In order to mitigate threats relating to the misuse of APIs by
-        system applications, one countermeasure is to allow the underlying
-        platform to monitor applications and what they are doing.  
-      </p>
-      <p>
-        For example, a system application may have permission to send an SMS
-        message but the end user could be notified at the time that this is
-        happening.
-      </p>
-      <p>
-        Security-sensitive events invoked by system applications SHALL be 
-        monitored by the execution environment and MAY trigger actions by 
-        another system application or a native application.
-      </p>
-    </section>
-        
     <section class='appendix'>
       <h2>Acknowledgements</h2>
       <p>
@@ -802,4 +486,3 @@
     </section>
   </body>
 </html>
-
