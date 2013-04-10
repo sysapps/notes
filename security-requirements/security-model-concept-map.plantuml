@@ -82,7 +82,7 @@ ExecutionEnvironment  "1"     --> "*"     API                    : supports and 
 AppInstance           "*"     --> "*"     API                    : invokes functionality \n defined by
 ExecutionEnvironment  "*"     --> "0..*"  Network                : connects to
 ExecutionEnvironment  "*"     --> "0..*"  WebServer              : connects to
-AppInstance           "1"     --> "0..*"  WebServer              : is authorised to \n connect to
+AppInstance           "1"     --> "0..*"  WebServer              : is authorized to \n connect to
 AppInstance           "*"     --> "1"     InstalledWebApp        : instantiated from
 PackagedApp                   --|>        InstalledWebApp
 HostedApp                     --|>        InstalledWebApp

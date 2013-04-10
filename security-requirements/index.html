@@ -108,26 +108,30 @@
         The reason for <em>standardizing</em> a security model is to enable
         potential interoperability of system applications and to produce a set
         of 'best practice' guidelines for implementors of system application
-        platforms.  This document may be used by application developers to 
+        platforms.  This document may be used by application developers to
         understand the constraints placed on system applications and the reason
-        for certain design choices.  
+        for certain design choices.
       </p>
       <p>
-        Furthermore, any implementers of the <a href="http://runtime.sysapps.org/">Runtime 
-        and Security Model</a> for system applications may wish to understand the rationale for
-        the mechanisms described there, and adapt them for a different context.
+        Furthermore, any implementers of the <a
+        href="http://runtime.sysapps.org/">Runtime  and Security Model</a> for
+        system applications may wish to understand the rationale for the
+        mechanisms described there, and adapt them for a different context.
       </p>
       </section>
       <section>      
       <h3>Document Scope</h3>
       <p>
-        This document defines the requirements for a new security model and does not define any
-        specific APIs.  The scope of this document is any element that a system
-        application may interact with and the execution environment, although the
-        requirements and threats may include more diverse assets and considerations. 
-        This document may make assertions around the platform implementing a
-        system application runtime environment in order to dictate expected
-        features.  As boundary objects, the following non-exhaustive list of things are
+        This document defines the requirements for a new security model and does
+        not define any specific APIs.  The scope of this document is any element
+        that a system application may interact with and the execution
+        environment, although the requirements and threats may include more
+        diverse assets and considerations.  This document may make assertions
+        around the platform implementing a system application runtime
+        environment in order to dictate expected features.
+      </p>
+      <p>
+        As boundary objects, the following non-exhaustive list of things are
         <em>not</em> within scope of this document:
       </p>
       <ul>
@@ -168,7 +172,7 @@
         <li><em>Application distributor</em>.  The entity responsible for 
             distributing an application, e.g. the owner and manager of an app 
             store.</li>
-      </ul>        
+      </ul> 
       <img src="./security-model-concept-map.png" />
       </section>      
     </section>
@@ -181,15 +185,15 @@
         <li><em>Device</em>.  The device running a conforming system application execution environment.  A user may have several devices.</li>
         <li><em>Execution environment</em>.  The system application platform, also described in this document as a <em>runtime</em>, responsible for controlling and supporting the system application and providing it with access to APIs.</li>
         <li><em>Network</em>.  The network connection(s) used by system applications.</li>
-        <li><em>Application</em>.  For the rest of this document, the word 'application' refers to a system application.</li>
-        <li><em>App Package</em>.  The downloaded content used to install the application.</li>
-        <li><em>App Manifest</em>.  A configuration document defined by the application containing metadata and the set of permissions that the application requires.</li>
+        <li><em>Application</em>.  For the rest of this document, the word 'application' refers to a web application running within a system application execution environment.</li>
+        <li><em>App Package</em>.  A <a href="http://runtime.sysapps.org/#packaged-applications">downloaded package</a> containing application content for packaged applications.</li>
+        <li><em>App Manifest</em>.  A <a href="http://runtime.sysapps.org/#application-manifest">configuration document</a> defined by the application containing metadata and the set of permissions that the application requires.</li>
         <li><em>App Instance</em>.  The runtime instance of an application.</li>
         <li><em>App Store</em>.  An entity who may be the source of applications and provide additional signing or assurance.</li>      
         <li><em>Side-loading</em>.  The installation of an application through a channel out side of a distributor or app store.  Most commonly through downloading an application package and installing it from disk.</li>
         <li><em>Malware</em>.  Malicious software, in this context a malicious system application with a primary aim which violates the end user's security or privacy requirements.</li>
         <li><em>Grayware</em>.  Software with a primary purpose that is aligned to the users expectations but is also bundled with some form of functionality (advertising, monitoring, etc) that violates the user's privacy requirements.</li>       
-        <li><em>Policy</em>.  A set of rules governing system applications or the system application environment.  This does not have to correspond to a particular language and may be implemented in any way (policy file, credentials, etc) so long as it allows for interoperability.</li> 
+        <li><em>Policy</em>.  A set of rules governing system applications or the system application environment.  This does not have to correspond to a particular language and may be implemented in any way (hard-coded, a policy file, credentials, etc).</li> 
       </ul>
     </section>
 
@@ -249,11 +253,14 @@
         Other requirements on a system application runtime include:
       </p>
       <ul>
-        <li>The owner, manufacturer or service provider of a device may install
+        <li>Allowing the owner, manufacturer or service provider of a device to install
             system applications and remove them.</li>
-        <li>Other platform entities such as the operating system or a native
-            application should be able to manage the permissions granted to
-            system applications.</li>
+        <li>Supporting remote installation and deletion of applications by request 
+          from a device stakeholder, specifically from an app store or device 
+          manufacturer.</li> 
+        <li>The runtime should be interoperable with native application security
+          interfaces and mechanisms, such that the operating system can manage the
+          privileges granted to applications.</li>
       </ul>      
     </section>
     <section>
