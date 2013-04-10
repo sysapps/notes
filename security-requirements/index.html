@@ -194,25 +194,42 @@
     </section>
 
     <section>
-      <h2>System Application Requirements</h2>
+      <h2>Runtime and Application Functional Expectations</h2>
       <p>
-        System applications are required to be able to do the following things.
+        In order to avoid security requirements from conflicting with 
+        functional requirements in the rest of the platform, this section
+        outlines the known functional requirements on a conforming 
+        runtime execution environment.  This includes information about
+        the APIs that will be available.
+      </p>
+      <p>
+        The runtime environment shall:
       </p>
       <ul>
-        <li>Use the Alarm API to create alarms.</li>
-        <li>Use the Contacts API to  add, remove and edit contacts.</li>
-        <li>Use the Messaging API to send, receive and view SMS.</li>
-        <li>Use the Telephony API to dial a number, pick up a call, route to voicemail, access the call log.</li>
-        <li>Use the Raw Sockets API to create, manipulate and listen for low-level TCP and UDP connections.</li>
-        <li>Use APIs defined by the Device APIs Working Group.</li>
-        <li>Communicate with other system applications.</li>
-        <li>Communicate with web servers and use online resources.</li>
-        <li>Express the permissions they request for accessing APIs.</li>
-        <li>Store data persistently through File APIs, both within a single 
-            application's sandboxed storage area and files on the rest of the 
-            system if permitted.</li>
-        <li>Provide evidence of their authenticity and provenance.</li>
-        <li>Detect the privileges they have been granted.</li>
+        <li>Provide system applications with no less functionality than 
+          is available to web pages operating in a normal browser 
+          context.</li>
+        <li>Expose APIs defined by the Device APIs Working Group to some 
+          applications.</li>
+        <li>Expose the Alarm API to some applications such that they can 
+          create alarms.</li>
+        <li>Expose the Contacts API to some applications such that they 
+          can add, remove and edit contacts.</li>
+        <li>Expose the Messaging API to some applications such that they 
+          can send, receive and view SMS.</li>
+        <li>Expose the Telephony API to some applications such that they 
+          can dial a number, pick up a call, route to voicemail, and 
+          access the call log.</li>
+        <li>Expose the Raw Sockets API to some applications such that they 
+          can create, manipulate and listen for low-level TCP and UDP 
+          connections.</li>
+        <li>Offer an inter-application communication mechanism to 
+          applications, such as WebActivities, to allow one application to 
+          trigger actions in defined parts of another application</li>
+        <li>Allow system applications to access some networked resources.
+        </li>
+        <li>Provide a way for users to install system applications from 
+          some online app stores and from archived files</li>
       </ul>
       <p>
         The users of a system application are assumed to have the following 
