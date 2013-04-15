@@ -8,7 +8,8 @@
       For the three scripts below, if your spec resides on dev.w3 you can check them
       out in the same tree and use relative links so that they'll work offline,
      -->
-    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' class='remove' async></script>
+    <script src='http://www.w3.org/Tools/respec/respec-w3c-common' 
+      class='remove' async></script>
     <script class='remove'>
       var respecConfig = {
           specStatus:           "ED",
@@ -66,18 +67,19 @@
     <section>
       <h2>Introduction</h2>
       <p>
-        This document defines the security requirements and threats for system applications. 
-        System applications are web applications that require stronger interaction with
-        the host platform compared to web pages and are most closely
-        comparable to native applications [[SYSAPPS-CHARTER]].  System applications enjoy
-        extra privileges and are able to access APIs which are not available to web
-        applications running in a normal browser sandbox.  They are therefore not bound by the
-        existing browser security model (See [[Zalewski2011]] for details on 
-        the current browser security model).  This document outlines the threats facing 
-        system applications in this context and then defines a set of security requirements 
-        which, when satisfied, will mitigate the threats.  This document will then outline
-        potential implementation options for the mitigations and how these may or may not 
-        adequately address the threats.
+        This document defines the security requirements and threats for system
+        applications.  System applications are web applications that require
+        stronger interaction with the host platform compared to web pages and
+        are most closely comparable to native applications [[SYSAPPS-CHARTER]].
+        System applications enjoy extra privileges and are able to access APIs
+        which are not available to web applications running in a normal browser
+        sandbox.  They are therefore not bound by the existing browser security
+        model (See [[Zalewski2011]] for details on  the current browser security
+        model).  This document outlines the threats facing  system applications
+        in this context and then defines a set of security requirements  which,
+        when satisfied, will mitigate the threats.  This document will then
+        outline potential implementation options for the mitigations and how
+        these may or may not  adequately address the threats.
       </p>
       <div class="note">
         So far, this document doesn't actually describe mitigations.  It should.
@@ -85,24 +87,24 @@
       <section>
       <h3>Purpose</h3>
       <p>
-        This document has been developed as part of a standardization process
-        in order to enable web applications to become more functional and to potentially
-        make them functional equals to native applications.
+        This document has been developed as part of a standardization process in
+        order to enable web applications to become more functional and to
+        potentially make them functional equals to native applications.
       </p>
-      
-      <p>  
+      <p> 
         At present, most web applications run in a browser context which is
-        intentionally isolated from the underlying operating system.  This allows users
-        (in theory) to visit web pages without security concerns as a malicious
-        browser-based application is limited in its ability to compromise the user's
-        security and privacy requirements.  However, this also means that browser-based
-        applications cannot perform functions that require access to
-        potentially-dangerous parts of the underlying platform.  For example: deleting
-        or changing contacts from an address book, sending SMS, or making outgoing
-        telephone calls.  To support such functions, system applications must be run in
-        a context outside of the web browser and new requirements must be placed upon
-        them to maintain security.  This document defines those new requirements and
-        suggests some technical measures for enforcing them.
+        intentionally isolated from the underlying operating system.  This
+        allows users (in theory) to visit web pages without security concerns as
+        a malicious browser-based application is limited in its ability to
+        compromise the user's security and privacy requirements.  However, this
+        also means that browser-based applications cannot perform functions that
+        require access to potentially-dangerous parts of the underlying
+        platform.  For example: deleting or changing contacts from an address
+        book, sending SMS, or making outgoing telephone calls.  To support such
+        functions, system applications must be run in a context outside of the
+        web browser and new requirements must be placed upon them to maintain
+        security.  This document defines those new requirements and suggests
+        some technical measures for enforcing them.
       </p>
       <p>
         The reason for <em>standardizing</em> a security model is to enable
@@ -137,8 +139,8 @@
       <ul>
         <li>Default API access control rules.</li>
         <li>API-specific access control rules or permissioning interfaces.</li>
-        <li>An exhaustive set of API permissions.  <em>Some</em> API permissions may
-            be defined, however.</li>
+        <li>An exhaustive set of API permissions.  <em>Some</em> API permissions 
+          may be defined, however.</li>
         <li>How application stores review or manage applications.</li>
         <li>Digital rights management for system application content.</li>
         <li>Side channel attacks on system applications.</li>
@@ -150,7 +152,8 @@
             applications.</li>
         <li>Modification to trusted components in the platform such as the 
             system application renderer process.</li>
-        <li>The runtime security of web pages as processed by a web browser.</li>
+        <li>The runtime security of web pages as processed by a web browser.
+        </li>
       </ul>
       </section>
 
@@ -181,66 +184,92 @@
       <h2>Terminology</h2>
       <p>The following terms are used throughout this document.</p>
       <ul>
-        <li><em>Device owners</em>. One or more stakeholders who has a level of ownership in the device.  This may include the user, operator and device manufacturer.  The owners are defined in a strict hierarchy such that a more privileged owner may override a less privileged owner.</li>
-        <li><em>Device</em>.  The device running a conforming system application execution environment.  A user may have several devices.</li>
-        <li><em>Execution environment</em>.  The system application platform, also described in this document as a <em>runtime</em>, responsible for controlling and supporting the system application and providing it with access to APIs.</li>
-        <li><em>Network</em>.  The network connection(s) used by system applications.</li>
-        <li><em>Application</em>.  For the rest of this document, the word 'application' refers to a web application running within a system application execution environment.</li>
-        <li><em>App Package</em>.  A <a href="http://runtime.sysapps.org/#packaged-applications">downloaded package</a> containing application content for packaged applications.</li>
-        <li><em>App Manifest</em>.  A <a href="http://runtime.sysapps.org/#application-manifest">configuration document</a> defined by the application containing metadata and the set of permissions that the application requires.</li>
+        <li><em>Device owners</em>. One or more stakeholders who has a level of
+        ownership in the device.  This may include the user, operator and
+        device manufacturer.  The owners are defined in a strict hierarchy such
+        that a more privileged owner may override a less privileged owner.</li>
+        <li><em>Device</em>.  The device running a conforming system application
+        execution environment.  A user may have several devices.</li>
+        <li><em>Execution environment</em>.  The system application platform,
+        also described in this document as a <em>runtime</em>, responsible for
+        controlling and supporting the system application and providing it with
+        access to APIs.</li>
+        <li><em>Network</em>.  The network connection(s) used by system
+        applications.</li>
+        <li><em>Application</em>.  For the rest of this document, the word
+        'application' refers to a web application running within a system
+        application execution environment.</li>
+        <li><em>App Package</em>.  A 
+        <a href="http://runtime.sysapps.org/#packaged-applications">
+        downloaded package</a> containing application content for packaged 
+        applications.</li>
+        <li><em>App Manifest</em>.  A 
+        <a href="http://runtime.sysapps.org/#application-manifest">configuration 
+        document</a> defined by the application containing metadata and the set 
+        of permissions that the application requires.</li>
         <li><em>App Instance</em>.  The runtime instance of an application.</li>
-        <li><em>App Store</em>.  An entity who may be the source of applications and provide additional signing or assurance.</li>      
-        <li><em>Side-loading</em>.  The installation of an application through a channel out side of a distributor or app store.  Most commonly through downloading an application package and installing it from disk.</li>
-        <li><em>Malware</em>.  Malicious software, in this context a malicious system application with a primary aim which violates the end user's security or privacy requirements.</li>
-        <li><em>Grayware</em>.  Software with a primary purpose that is aligned to the users expectations but is also bundled with some form of functionality (advertising, monitoring, etc) that violates the user's privacy requirements.</li>       
-        <li><em>Policy</em>.  A set of rules governing system applications or the system application environment.  This does not have to correspond to a particular language and may be implemented in any way (hard-coded, a policy file, credentials, etc).</li> 
+        <li><em>App Store</em>.  An entity who may be the source of applications
+        and provide additional signing or assurance.</li>
+        <li><em>Side-loading</em>.  The installation of an application through a
+        channel out side of a distributor or app store.  Most commonly through
+        downloading an application package and installing it from disk.</li>
+        <li><em>Malware</em>.  Malicious software, in this context a malicious
+        system application with a primary aim which violates the end user's
+        security or privacy requirements.</li>
+        <li><em>Grayware</em>.  Software with a primary purpose that is aligned
+        to the users expectations but is also bundled with some form of
+        functionality (advertising, monitoring, etc) that violates the user's
+        privacy requirements.</li>
+        <li><em>Policy</em>.  A set of rules governing system applications or
+        the system application environment.  This does not have to correspond
+        to a particular language and may be implemented in any way (hard-coded,
+        a policy file, credentials, etc).</li>
       </ul>
     </section>
 
     <section>
       <h2>Runtime and Application Functional Expectations</h2>
       <p>
-        In order to avoid security requirements from conflicting with 
+        In order to avoid security requirements from conflicting with
         functional requirements in the rest of the platform, this section
-        outlines the known functional requirements on a conforming 
-        runtime execution environment.  This includes information about
-        the APIs that will be available.
+        outlines the known functional requirements on a conforming  runtime
+        execution environment.  This includes information about the APIs that
+        will be available.
       </p>
       <p>
         The runtime environment shall:
       </p>
       <ul>
-        <li>Provide system applications with no less functionality than 
-          is available to web pages operating in a normal browser 
-          context.</li>
-        <li>Expose APIs defined by the Device APIs Working Group to some 
-          applications.</li>
-        <li>Expose the Alarm API to some applications such that they can 
-          create alarms.</li>
-        <li>Expose the Contacts API to some applications such that they 
-          can add, remove and edit contacts.</li>
-        <li>Expose the Messaging API to some applications such that they 
-          can send, receive and view SMS.</li>
-        <li>Expose the Telephony API to some applications such that they 
-          can dial a number, pick up a call, route to voicemail, and 
-          access the call log.</li>
-        <li>Expose the Raw Sockets API to some applications such that they 
-          can create, manipulate and listen for low-level TCP and UDP 
-          connections.</li>
-        <li>Offer an inter-application communication mechanism to 
-          applications, such as WebActivities, to allow one application to 
-          trigger actions in defined parts of another application</li>
-        <li>Allow system applications to access some networked resources.
-        </li>
-        <li>Provide a way for users to install system applications from 
-          some online app stores and from archived files</li>
+        <li>Provide system applications with no less functionality than is
+        available to web pages operating in a normal browser context.</li>
+        <li>Expose APIs defined by the Device APIs Working Group to some
+        applications.</li>
+        <li>Expose the Alarm API to some applications such that they can create
+        alarms.</li>
+        <li>Expose the Contacts API to some applications such that they can add,
+        remove and edit contacts.</li>
+        <li>Expose the Messaging API to some applications such that they can
+        send, receive and view SMS.</li>
+        <li>Expose the Telephony API to some applications such that they can
+        dial a number, pick up a call, route to voicemail, and access the call
+        log.</li>
+        <li>Expose the Raw Sockets API to some applications such that they can
+        create, manipulate and listen for low-level TCP and UDP
+        connections.</li>
+        <li>Offer an inter-application communication mechanism to applications,
+        such as WebActivities, to allow one application to trigger actions in
+        defined parts of another application</li>
+        <li>Allow system applications to access some networked resources.</li>
+        <li>Provide a way for users to install system applications from some 
+          online app stores and from archived files</li>
       </ul>
       <p>
         The users of a system application are assumed to have the following 
         requirements.
       </p>
       <ul>
-        <li>Users can install system applications (barring policies expressed by owners).</li>
+        <li>Users can install system applications (barring policies expressed by
+        owners).</li>
         <li>Users can remove system applications they have installed.</li>
         <li>Users can manage and view the permissions granted to the 
             installed system applications.</li>
@@ -253,14 +282,14 @@
         Other requirements on a system application runtime include:
       </p>
       <ul>
-        <li>Allowing the owner, manufacturer or service provider of a device to install
-            system applications and remove them.</li>
-        <li>Supporting remote installation and deletion of applications by request 
-          from a device stakeholder, specifically from an app store or device 
-          manufacturer.</li> 
+        <li>Allowing the owner, manufacturer or service provider of a device to 
+        install system applications and remove them.</li>
+        <li>Supporting remote installation and deletion of applications by 
+        request from a device stakeholder, specifically from an app store or 
+        device manufacturer.</li> 
         <li>The runtime should be interoperable with native application security
-          interfaces and mechanisms, such that the operating system can manage the
-          privileges granted to applications.</li>
+        interfaces and mechanisms, such that the operating system can manage the
+        privileges granted to applications.</li>
       </ul>      
     </section>
     <section>
@@ -293,205 +322,439 @@
         importance.
       </p>
       
-    <table class="threats">
+      <table class="threats">
       <tr>
-        <th>Threat</th>
-        <th>Description</th>
-        <th>Impact</th>
-        <th>Likelihood</th>
+        <th>
+          Threat
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Impact
+        </th>
+        <th>
+          Likelihood
+        </th>
       </tr>
       <tr>
-        <td>Misuse of user or application data through lack of transport security</td>
-        <td>An application communicates insecurely with a remote server and a malicious
-          party intercepts application or user data</td>
-        <td>Medium - loss of confidentiality and integrity of one user or application's data</td>
-        <td>Medium - this has occurred many times in the past</td>
+        <td>
+          Misuse of user or application data through lack of transport security
+        </td>
+        <td>
+          An application communicates insecurely with a remote server and a 
+          malicious party intercepts application or user data
+        </td>
+        <td>
+          Medium - loss of confidentiality and integrity of one user or 
+          application's data
+        </td>
+        <td>
+          Medium - this has occurred many times in the past
+        </td>
       </tr>
       <tr>
-        <td>Injection of code into trusted application through an unauthenticated or compromised
-          remote endpoint</td>
-        <td>An application downloads executable code from a remote server which is
-          modified by a malicious party either by compromising the server or the
-          communication</td>
-        <td>High - misuse of application permissions resulting in loss of data, theft of credentials or installation of malware.  May be applied to all users of the application with one attack.</td>
-        <td>High - this has occurred many times previously with web applications</td>          
+        <td>
+          Injection of code into trusted application through an unauthenticated 
+          or compromised remote endpoint
+        </td>
+        <td>
+          An application downloads executable code from a remote server which is 
+          modified by a malicious party either by compromising the server or the 
+          communication
+        </td>
+        <td>
+          High - misuse of application permissions resulting in loss of data, 
+          theft of credentials or installation of malware. May be applied to all 
+          users of the application with one attack.
+        </td>
+        <td>
+          High - this has occurred many times previously with web applications
+        </td>
       </tr>
       <tr>
-        <td>Exploit weak credentials / bad session handling to create a session with
-          an application host impersonating a legitimate user</td>
-        <td>A malicious party exploits the session handling code used by the application
-          to communicate with a remote server to impersonate the user</td>
-        <td>Medium - user impersonation with an impact dependent on the application but limited to one person.</td>
-        <td>High - this has occurred many times previously with web applications</td>           
+        <td>
+          Exploit weak credentials / bad session handling to create a session 
+          with an application host impersonating a legitimate user
+        </td>
+        <td>
+          A malicious party exploits the session handling code used by the 
+          application to communicate with a remote server to impersonate the 
+          user
+        </td>
+        <td>
+          Medium - user impersonation with an impact dependent on the 
+          application but limited to one person.
+        </td>
+        <td>
+          High - this has occurred many times previously with web applications
+        </td>
       </tr>
       <tr>
-        <td>Client-side code injection through improperly controlled inputs</td>
-        <td>An attacker uses an unauthenticated client-side API or injection method
-          to inject malicious code and exploit the application's credentials</td>
-        <td>High - misuse of application permissions resulting in loss of data, theft of credentials or installation of malware.</td>
-        <td>Low - little history of this on mobile platforms, although more on PC.  Requires control of the client and each individual would need to be attacked separately.</td>
+        <td>
+          Client-side code injection through improperly controlled inputs
+        </td>
+        <td>
+          An attacker uses an unauthenticated client-side API or injection 
+          method to inject malicious code and exploit the application's 
+          credentials
+        </td>
+        <td>
+          High - misuse of application permissions resulting in loss of data, 
+          theft of credentials or installation of malware.
+        </td>
+        <td>
+          Low - little history of this on mobile platforms, although more on PC. 
+          Requires control of the client and each individual would need to be 
+          attacked separately.
+        </td>
       </tr>
       <tr>
-        <td>Malware installed by a malicious user with physical access</td>
-        <td>An attacker with physical access to the device is able to install a malicious
-          system-level application and misuse device capabilities and credentials</td>
-        <td>High</td>
-        <td>Medium - requires physical access to the device, but this is not unlikely.</td>
+        <td>
+          Malware installed by a malicious user with physical access
+        </td>
+        <td>
+          An attacker with physical access to the device is able to install a 
+          malicious system-level application and misuse device capabilities and 
+          credentials
+        </td>
+        <td>
+          High
+        </td>
+        <td>
+          Medium - requires physical access to the device, but this is not 
+          unlikely.
+        </td>
       </tr>
       <tr>
-        <td>User installed malware</td>
-        <td>A user accidentally installs malware not realizing the implications of
-          doing so. This malware is able to misuse device capabilities in various
-          ways (see below)</td>
-        <td>High</td>
-        <td>Mixed.  Mobile malware in western countries is relatively scarce.  However, it is growing and malware on other platforms is significant.</td>
+        <td>
+          User installed malware
+        </td>
+        <td>
+          A user accidentally installs malware not realizing the implications 
+          of doing so. This malware is able to misuse device capabilities in 
+          various ways (see below)
+        </td>
+        <td>
+          High
+        </td>
+        <td>
+          Mixed. Mobile malware in western countries is relatively scarce. 
+          However, it is growing and malware on other platforms is significant.
+        </td>
       </tr>
       <tr>
-        <td>User-installed grayware accessing more capabilities than the user wanted</td>
-        <td>A user installs a genuine application but it operates in unexpected ways,
-          violating user security requirements (excessive adverts, privacy invasion,
-          data sharing).</td>
-        <td>Low</td>
-        <td>High - plenty of examples exist on app stores</td>
+        <td>
+          User-installed grayware accessing more capabilities than the user 
+          wanted
+        </td>
+        <td>
+          A user installs a genuine application but it operates in unexpected 
+          ways, violating user security requirements (excessive adverts, privacy 
+          invasion, data sharing).
+        </td>
+        <td>
+          Low
+        </td>
+        <td>
+          High - plenty of examples exist on app stores
+        </td>
       </tr>
       <tr>
-        <td>Malware installed through app store compromise</td>
-        <td>A trusted, legitimate source of applications (such as an app store) is
-          remotely compromised in order to authorize and install malware on end user
-          devices</td>
-        <td>Very High - this could compromise all users of an app store</td>
-        <td>Low</td>  
+        <td>
+          Malware installed through app store compromise
+        </td>
+        <td>
+          A trusted, legitimate source of applications (such as an app store) is 
+          remotely compromised in order to authorize and install malware on end 
+          user devices
+        </td>
+        <td>
+          Very High - this could compromise all users of an app store
+        </td>
+        <td>
+          Low
+        </td>
       </tr>
       <tr>
-        <td>Malware installed through side-loading</td>
-        <td>Malware is installed through a channel which is not mediated by any malware
-          checking process</td>
-        <td>High</td>
-        <td>Medium - side-loading is a known vector for attack on mobile</td>            
+        <td>
+          Malware installed through side-loading
+        </td>
+        <td>
+          Malware is installed through a channel which is not mediated by any 
+          malware checking process
+        </td>
+        <td>
+          High
+        </td>
+        <td>
+          Medium - side-loading is a known vector for attack on mobile
+        </td>
       </tr>
       <tr>
-        <td>Malware: destructive</td>
-        <td>Malware misuses its permissions to delete data or cause harm to the device
-          through APIs.</td>
-        <td>Medium/High - while destruction is bad for the end user, it may only cost time rather than necessarily money.</td>
-        <td>Mixed (see earlier)</td>
+        <td>
+          Malware: destructive
+        </td>
+        <td>
+          Malware misuses its permissions to delete data or cause harm to the 
+          device through APIs.
+        </td>
+        <td>
+          Medium/High - while destruction is bad for the end user, it may only 
+          cost time rather than necessarily money.
+        </td>
+        <td>
+          Mixed (see earlier)
+        </td>
       </tr>
       <tr>
-        <td>Malware: SMS / Telephony</td>
-        <td>Malware misuses SMS or Telephony access to call or send text messages
-          to expensive numbers</td>
-        <td>Medium/High - could be expensive for users, but unlikely to cost too much or it will quickly be detected.</td>
-        <td>Medium/Low - does exist on mobile devices but rare.  Depends on context: when reliable app stores are always used this is relatively unlikely</td>          
+        <td>
+          Malware: SMS / Telephony
+        </td>
+        <td>
+          Malware misuses SMS or Telephony access to call or send text messages 
+          to expensive numbers
+        </td>
+        <td>
+          Medium/High - could be expensive for users, but unlikely to cost too 
+          much or it will quickly be detected.
+        </td>
+        <td>
+          Medium/Low - does exist on mobile devices but rare. Depends on 
+          context: when reliable app stores are always used this is relatively 
+          unlikely
+        </td>
       </tr>
       <tr>
-        <td>Malware: Contacts, spam and email misuse</td>
-        <td>Malware misuses access to contact data in order to spam other users or perform spear phishing</td>
-        <td>Medium/Low - spear phishing could have a monetary cost on the affected user, although most spamming attacks have a low severity.</td>
-        <td>Medium/Low - does exist on mobile devices but relatively rare.</td>            
+        <td>
+          Malware: Contacts, spam and email misuse
+        </td>
+        <td>
+          Malware misuses access to contact data in order to spam other users or 
+          perform spear phishing
+        </td>
+        <td>
+          Medium/Low - spear phishing could have a monetary cost on the affected 
+          user, although most spamming attacks have a low severity.
+        </td>
+        <td>
+          Medium/Low - does exist on mobile devices but relatively rare.
+        </td>
       </tr>
       <tr>
-        <td>Malware: adware</td>
-        <td>Malware spoils the user experience by displaying excessive adverts</td>
-        <td>Low</td>
-        <td>Medium - exists but can be avoided relatively easily.</td>                
+        <td>
+          Malware: adware
+        </td>
+        <td>
+          Malware spoils the user experience by displaying excessive adverts
+        </td>
+        <td>
+          Low
+        </td>
+        <td>
+          Medium - exists but can be avoided relatively easily.
+        </td>
       </tr>
       <tr>
-        <td>Malware: botnet, network misuse</td>
-        <td>Malware behaves like a botnet, misusing the device's network connection
-          to contact unknown services, lowering battery life and performance and
-          potentially costing the user money</td>
-        <td>Low - generally only inconveniences the user, monetary loss minor</td>
-        <td>Low (mobile) - botnets on mobile are almost unheard of (though they are beginning to be reported).  High (PC) - a well acknowledged problem.</td>
+        <td>
+          Malware: botnet, network misuse
+        </td>
+        <td>
+          Malware behaves like a botnet, misusing the device's network 
+          connection to contact unknown services, lowering battery life and 
+          performance and potentially costing the user money
+        </td>
+        <td>
+          Low - generally only inconveniences the user, monetary loss minor
+        </td>
+        <td>
+          Low (mobile) - botnets on mobile are almost unheard of (though they 
+          are beginning to be reported). High (PC) - a well acknowledged 
+          problem.
+        </td>
       </tr>
       <tr>
-        <td>Malware: changing settings for novelty / amusement</td>
-        <td>Malware is installed and annoys the user to the amusement of an attacker.
-          No real harm is done.</td>
-        <td>Low - easily revertible</td>
-        <td>Low</td>
+        <td>
+          Malware: changing settings for novelty / amusement
+        </td>
+        <td>
+          Malware is installed and annoys the user to the amusement of an 
+          attacker. No real harm is done.
+        </td>
+        <td>
+          Low - easily revertible
+        </td>
+        <td>
+          Low
+        </td>
       </tr>
       <tr>
-        <td>Malware: credential and identity theft</td>
-        <td>Malware gains access to credentials, email accounts or SMS inboxes allowing
-          it (or the authors) to impersonate the user and defraud them. This may
-          include defeating two-factor authentication.</td>
-        <td>High - possibility of defrauding the user and impersonating them.</td>
-        <td>Medium</td>                 
+        <td>
+          Malware: credential and identity theft
+        </td>
+        <td>
+          Malware gains access to credentials, email accounts or SMS inboxes 
+          allowing it (or the authors) to impersonate the user and defraud them. 
+          This may include defeating two-factor authentication.
+        </td>
+        <td>
+          High - possibility of defrauding the user and impersonating them.
+        </td>
+        <td>
+          Medium
+        </td>
       </tr>
       <tr>
-        <td>Malware: blackmail</td>
-        <td>Malware threatens to destroy user data or locks the user out of their
-          device until payment is made to the attacker.</td>
-        <td>High - potential loss of data or money</td>
-        <td>Low</td>            
+        <td>
+          Malware: blackmail
+        </td>
+        <td>
+          Malware threatens to destroy user data or locks the user out of their 
+          device until payment is made to the attacker.
+        </td>
+        <td>
+          High - potential loss of data or money
+        </td>
+        <td>
+          Low
+        </td>
       </tr>
       <tr>
-        <td>Malware: in-app billing</td>
-        <td>Malware exploits the in-app billing capabilities of the device to charge
-          the user money without authorization.</td>
-        <td>High/medium - potential loss of (relatively small amounts of) money</td>
-        <td>Medium - few known attacks, but it seems likely</td>
+        <td>
+          Malware: in-app billing
+        </td>
+        <td>
+          Malware exploits the in-app billing capabilities of the device to 
+          charge the user money without authorization.
+        </td>
+        <td>
+          High/medium - potential loss of (relatively small amounts of) money
+        </td>
+        <td>
+          Medium - few known attacks, but it seems likely
+        </td>
       </tr>
       <tr>
-        <td>Malware: UI spoofing for privilege escalation</td>
-        <td>Malware phishes the end user by impersonating another application, stealing
-          user credentials and adding new privileges</td>
-        <td>Medium - potential loss of a credential</td>
-        <td>Low - few known attacks, not always a high success rate.</td>           
+        <td>
+          Malware: UI spoofing for privilege escalation
+        </td>
+        <td>
+          Malware phishes the end user by impersonating another application, 
+          stealing user credentials and adding new privileges
+        </td>
+        <td>
+          Medium - potential loss of a credential
+        </td>
+        <td>
+          Low - few known attacks, not always a high success rate.
+        </td>
       </tr>
       <tr>
-        <td>Malware: installed through a malicious software update</td>
-        <td>An application is granted permission to access sensitive resources, but
-        is then updated and replaced by a malicious application authored by another
-        party.</td>
-        <td>Medium/low - depends on the application replaced</td>
-        <td>Medium/low - some history of exploiting update systems</td>
-      </tr>      
-      <tr>
-        <td>NFC abuse - exploiting a device's NFC interface (through proximity) to
-          impersonate a user</td>
-        <td>The device's NFC capabilities are used by malware to perform a relay attack
-          (or otherwise) and impersonate the user somewhere else.</td>
-        <td>High - loss of money in electronic payment scenarios</td>
-        <td>Low - lack of known attacks.</td>           
+        <td>
+          Malware: installed through a malicious software update
+        </td>
+        <td>
+          An application is granted permission to access sensitive resources, 
+          but is then updated and replaced by a malicious application authored 
+          by another party.
+        </td>
+        <td>
+          Medium/low - depends on the application replaced
+        </td>
+        <td>
+          Medium/low - some history of exploiting update systems
+        </td>
       </tr>
       <tr>
-        <td>Device denial of service through API abuse</td>
-        <td>Malware misuses APIs to the extent that the user is no longer able to
-          use the device or some services. For instance, processor-intensive queries.</td>
-        <td>Low - inconveniences the user (depending on context)</td>
-        <td>Low - relatively little incentive for this attack.</td>               
+        <td>
+          NFC abuse - exploiting a device's NFC interface (through proximity) to 
+          impersonate a user
+        </td>
+        <td>
+          The device's NFC capabilities are used by malware to perform a relay 
+          attack (or otherwise) and impersonate the user somewhere else.
+        </td>
+        <td>
+          High - loss of money in electronic payment scenarios
+        </td>
+        <td>
+          Low - lack of known attacks.
+        </td>
       </tr>
       <tr>
-        <td>Circumvention of access control through access to other interfaces/APIs</td>
-        <td>Malware is able to circumvent the platform's access control system through
-          use of other APIs, interfaces or methods exposed by other applications
-          in order to gain access to more features</td>
-        <td>Potentially high - depends entirely on the APIs being circumvented.</td>
-        <td>Unknown</td>
+        <td>
+          Device denial of service through API abuse
+        </td>
+        <td>
+          Malware misuses APIs to the extent that the user is no longer able to 
+          use the device or some services. For instance, processor-intensive 
+          queries.
+        </td>
+        <td>
+          Low - inconveniences the user (depending on context)
+        </td>
+        <td>
+          Low - relatively little incentive for this attack.
+        </td>
       </tr>
       <tr>
-        <td>Loss of user data stored by an application</td>
-        <td>An application does not store data given by the user safely, 
-          resulting in a accidental or malicious integrity compromise or 
-          loss.</td>
-        <td>Medium: loss of user data (contacts / media / etc) in one application</td>
-        <td>Medium/low</td>
+        <td>
+          Circumvention of access control through access to other 
+          interfaces/APIs
+        </td>
+        <td>
+          Malware is able to circumvent the platform's access control system 
+          through use of other APIs, interfaces or methods exposed by other 
+          applications in order to gain access to more features
+        </td>
+        <td>
+          Potentially high - depends entirely on the APIs being circumvented.
+        </td>
+        <td>
+          Unknown
+        </td>
       </tr>
-    </table>
+      <tr>
+        <td>
+          Loss of user data stored by an application
+        </td>
+        <td>
+          An application does not store data given by the user safely, resulting 
+          in a accidental or malicious integrity compromise or loss.
+        </td>
+        <td>
+          Medium: loss of user data (contacts / media / etc) in one application
+        </td>
+        <td>
+          Medium/low
+        </td>
+      </tr>
+      </table>
     <section>      
     <h3>Conclusions</h3>
     <p>
       From this list of threats the following requirements can be elicited:
     </p>
     <ul>
-      <li>System applications must, by default, be isolated from the rest of the system and other applications.</li>
-      <li>System applications must communicate securely with authenticated endpoints to avoid content injection.  This implies that system applications must themselves be identifiable, and that the system application runtime must be able to authenticate all remote and local endpoints.</li> 
-      <li>System applications must implement a least-privilege access control to limit the impact of malware and should be sufficiently configurable to allow grayware to be constrained if a user wishes to do so.</li>
-      <li>Least privilege access control must include access to remote sources, particularly for loading scripts and other content.</li>
-      <li>System applications and their activities must be visible and/or auditable to end users to mitigate risks of spyware</li>
-      <li>Applications from unauthenticated sources should be constrained by default as the impact of malware is potentially high.</li>
-      <li>The threat of code injection from remote servers is sufficient that steps should be taken to guarantee the integrity of all remote inputs.</li>
+      <li>System applications must, by default, be isolated from the rest of the
+      system and other applications.</li>
+      <li>System applications must communicate securely with authenticated
+      endpoints to avoid content injection.  This implies that system
+      applications must themselves be identifiable, and that the system
+      application runtime must be able to authenticate all remote and local
+      endpoints.</li>
+      <li>System applications must implement a least-privilege access control to
+      limit the impact of malware and should be sufficiently configurable to
+      allow grayware to be constrained if a user wishes to do so.</li>
+      <li>Least privilege access control must include access to remote sources,
+      particularly for loading scripts and other content.</li>
+      <li>System applications and their activities must be visible and/or
+      auditable to end users to mitigate risks of spyware</li>
+      <li>Applications from unauthenticated sources should be constrained by
+      default as the impact of malware is potentially high.</li>
+      <li>The threat of code injection from remote servers is sufficient that
+      steps should be taken to guarantee the integrity of all remote
+      inputs.</li>
     </ul>
     </section>      
     </section>
