@@ -22,9 +22,24 @@ class AppInstance {
     appdata
 }
 
-class AppPackage {
+class PackagedApp {
     content
-    manifest
+}
+
+class InstalledWebApp {
+
+}
+
+class AppManifest {
+
+}
+
+class PackageManifest {
+
+}
+
+class HostedApp {
+
 }
 
 class Network {
@@ -39,11 +54,21 @@ class AppStore {
 
 }
 
+class Origin {
+    scheme
+    domain
+    port
+}
+
+class AppOrigin {
+	scheme = "app://"
+	port = null
+}
+
 
 interface API {
 
 }
-
 
 User                  "1..*"  --> "1..*"  Device                 : uses
 DeviceOwner           "1..*"  --> "1"     Device                 : controls
@@ -55,12 +80,31 @@ Device                "1"     <-- "1"     ExecutionEnvironment   : runs on
 AppInstance           "0..*"  <-- "1"     ExecutionEnvironment   : executes and controls
 ExecutionEnvironment  "1"     --> "*"     API                    : supports and provides \n access control for
 AppInstance           "*"     --> "*"     API                    : invokes functionality \n defined by
-AppInstance           "1"     --> "1"     AppPackage             : loaded from
 ExecutionEnvironment  "*"     --> "0..*"  Network                : connects to
 ExecutionEnvironment  "*"     --> "0..*"  WebServer              : connects to
-AppInstance           "1"     --> "0..*"  WebServer              : is authorised to \n connect to and \n may load content \n from
-AppPackage            "*"     <-- "1"     AppDeveloper           : created
-AppPackage            "1..*"  --> "0..*"  AppStore               : can be found from
+AppInstance           "1"     --> "0..*"  WebServer              : is authorised to \n connect to
+AppInstance           "*"     --> "1"     InstalledWebApp        : instantiated from
+PackagedApp                   --|>        InstalledWebApp
+HostedApp                     --|>        InstalledWebApp
+AppInstance           "?"     --> "1"     Origin                 : has a
+WebOrigin             "1"     <--         HostedApp              : has a
+WebOrigin                     --|>        Origin
+AppOrigin                     --|>        Origin
+HostedApp             "1..*"  --> "1..*"  WebServer              : loads content from a
+
+PackagedApp           "1"     --> "1"     AppOrigin              : has a
+PackagedApp           "1"     --> "1"     PackageManifest        : has a
+InstalledWebApp       "1"     --> "1"     AppManifest            : has a
+
+PackagedApp           "1"     --> "*"     Signature              : contains
+Signature             "*"     --> "1"     Authority              : signed by
+
+AppDeveloper                  --|>        Authority
+Manufacturer	              --|>        Authority
+AppDistributor                --|>        Authority
+
+InstalledWebApp       "*"     <-- "1"     AppDeveloper           : created
+InstalledWebApp       "1..*"  --> "0..*"  AppStore               : can be found from
 AppStore              "*"     <-- "1"     AppDistributor         : Owns and manages
 
 @enduml
